@@ -12,8 +12,8 @@
 </div>
 
 ## 安装
-    1.pip install nonebot_plugin_summon
-    2.nb plugin install nonebot_plugin_summon
+    1.pip install nonebot-plugin-summon
+    2.nb plugin install nonebot-plugin-summon
     3.Download zip
     
 ## 指令
