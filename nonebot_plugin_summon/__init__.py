@@ -15,7 +15,10 @@ except ModuleNotFoundError:
 
 data_path = "./data/summon/"
 switch = 1
-NICKNAME: str = list(nonebot.get_driver().config.nickname)[0]
+try:
+    NICKNAME: str = nonebot.get_driver().config.nickname
+except:
+    NICKNAME: str = "脑积水"
 
 
 
