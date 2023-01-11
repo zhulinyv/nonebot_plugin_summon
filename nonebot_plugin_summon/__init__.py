@@ -12,9 +12,9 @@ except ModuleNotFoundError:
     import json
 
 
-
 data_path = "./data/summon/"
 switch = 1
+
 try:
     NICKNAME: str = nonebot.get_driver().config.nickname
 except:
@@ -72,7 +72,7 @@ async def _(event: GroupMessageEvent):
     global data_path_gid
     data_path_gid = data_path + gid + "/"
     data = read_json()
-    msg = f" {data} ;".replace('{', '').replace('}', '').replace(',', ' ;\n').replace('\'', '')
+    msg = f"{data}".replace(' ', '').replace(':', '：').replace('{', '').replace('}', '').replace(',', '\n').replace('\'', '')
     await list_summoning.finish(msg)
 
 
@@ -84,8 +84,8 @@ async def _(event: GroupMessageEvent, msg: Message = CommandArg()):
     data_path_gid = data_path + gid + "/"
     name = msg.extract_plain_text().strip()
     data = read_json()
-    qid = data[name]
     try:
+        qid = data[name]
         if switch == 1:
             await summon.finish(Message(f"[CQ:poke,qq={qid}]"))
         elif switch == 2:
@@ -94,7 +94,7 @@ async def _(event: GroupMessageEvent, msg: Message = CommandArg()):
             await summon.send(Message(f"[CQ:poke,qq={qid}]"))
             await summon.send(Message(f"[CQ:at,qq={qid}]"))
     except KeyError:
-        await summon.finish(f"{NICKNAME}的记忆里没有这号人捏......")
+        await summon.finish(f"{NICKNAME}的记忆里没有这号人捏......".replace('{\'', '').replace('\'}', ''))
 
 
 
