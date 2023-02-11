@@ -97,8 +97,20 @@ async def _(event: GroupMessageEvent, msg: Message = CommandArg()):
         await summon.finish(f"{NICKNAME}的记忆里没有这号人捏......".replace('{\'', '').replace('\'}', ''))
 
 
-
-
+poke = on_command("戳", priority=80, block=True)
+@poke.handle()
+async def _(event: GroupMessageEvent, msg: Message = CommandArg()):
+    gid = str(event.group_id)
+    global data_path_gid
+    data_path_gid = data_path + gid + "/"
+    name = msg.extract_plain_text().strip()
+    data = read_json()
+    try:
+        qid = data[name]
+        for i in range(9)
+            await poke.send(Message(f"[CQ:poke,qq={qid}]"))
+    except KeyError:
+        await poke.finish(f"{NICKNAME}的记忆里没有这号人捏......".replace('{\'', '').replace('\'}', ''))
 
 # read_json
 def read_json() -> dict:
