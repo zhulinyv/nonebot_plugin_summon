@@ -22,6 +22,7 @@ model_switch = on_command("切换召唤术", aliases={"切换召唤模式"}, rul
 list_summoning = on_command("召唤列表", aliases={"查看召唤", "查看召唤术"}, priority=60, block=True)
 summon = on_command("召唤", priority=60, block=True)
 poke = on_command("戳", priority=60, block=True)
+at = on_command("艾特", priority=60, block=True)
 
 
 """执行指令"""
@@ -137,3 +138,26 @@ async def _(event: GroupMessageEvent, msg: Message = CommandArg()):
             await poke.send(Message(f"[CQ:poke,qq={qid}]"))
         except Exception as e:
             await poke.send(f"戳一戳失败, 错误信息: {e}")
+
+
+@at.handle()
+async def _(event: GroupMessageEvent, msg: Message = CommandArg()):
+    gid = str(event.group_id)   # 获取群号
+    message = msg.extract_plain_text().strip()  # 获取纯文本信息
+    variable_list = message.split(' ')  # 以空格分割
+    variable_list = [word.strip() for word in variable_list if word.strip()]    # 去除空格
+    await poke.finish("格式错误，请检查后重试\n戳+昵称+次数(数字)", at_sender=True) if len(variable_list) < 2 else ...  # 判断列表长度
+    name = variable_list[0] # 名字
+    nums = int(variable_list[1]) if variable_list[1].isdigit() else await poke.finish("格式错误，请检查后重试\n艾特+昵称+次数(数字)", at_sender=True) # 次数
+    await poke.finish(f"要人家艾特这么多次, 你想让{NICKNAME}风控嘛......", at_sende=True) if nums > 10 else ... # 判断次数
+    try:
+        qid = userdata[gid][name]   # 获取qq号
+    except KeyError:
+        await poke.finish(f"{NICKNAME}的记忆里没有这号人捏......", at_sender=True)    # 如果没有这个人，那么就是KeyError
+
+    for i in range(nums):   # 循环戳
+        try:
+            await poke.send(Message(f"[CQ:at,qq={qid}]"))
+        except Exception as e:
+            await poke.send(f"艾特失败, 错误信息: {e}")
+
