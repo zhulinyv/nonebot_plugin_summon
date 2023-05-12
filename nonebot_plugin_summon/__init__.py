@@ -90,7 +90,7 @@ async def _(switch_msg: Message = CommandArg()):
 async def _(event: GroupMessageEvent):
     gid = str(event.group_id)   # 获取群号
     if gid not in userdata or userdata[gid] == {}:    # 判断是否有这个群, 以及这个群的dict是否为空
-        await list_summoning.finish(f"在本群{NICKNAME}的记忆里还没有人捏......", at_sende=True)
+        await list_summoning.finish(f"在本群{NICKNAME}的记忆里还没有人捏......", at_sender=True)
     else:
         dataDict = userdata[gid]    # 获取dict
     msg = ""
@@ -126,7 +126,7 @@ async def _(event: GroupMessageEvent, msg: Message = CommandArg()):
     await poke.finish("格式错误，请检查后重试\n戳+昵称+次数(数字)", at_sender=True) if len(variable_list) < 2 else ...  # 判断列表长度
     name = variable_list[0] # 名字
     nums = int(variable_list[1]) if variable_list[1].isdigit() else await poke.finish("格式错误，请检查后重试\n戳+昵称+次数(数字)", at_sender=True) # 次数
-    await poke.finish(f"要人家戳这么多次, 你想让{NICKNAME}风控嘛......", at_sende=True) if nums > 10 else ... # 判断次数
+    await poke.finish(f"要人家戳这么多次, 你想让{NICKNAME}风控嘛......", at_sender=True) if nums > 10 else ... # 判断次数
     try:
         qid = userdata[gid][name]   # 获取qq号
     except KeyError:
